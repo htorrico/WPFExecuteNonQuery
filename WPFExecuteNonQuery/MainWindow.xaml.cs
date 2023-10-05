@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Entidades;
+
 
 namespace WPFExecuteNonQuery
 {
@@ -28,26 +30,19 @@ namespace WPFExecuteNonQuery
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            try
+            Categoria categoria = new Categoria
             {
-                string connectionString = "Data Source=HUGO-PC\\SQLEXPRESS;Initial Catalog=Neptuno5;User ID=userTecsup;Password=123456";
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    SqlCommand cmd = new SqlCommand("InsertarCategorias", connection);
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@idcategoria", int.Parse(txtIdCategoria.Text));
-                    cmd.Parameters.AddWithValue("@nombrecategoria", txtNombreCategoria.Text);
-                    cmd.Parameters.AddWithValue("@descripcion", txtDescripcion.Text);
-                    cmd.Parameters.AddWithValue("@CodCategoria", txtCodCategoria.Text);
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Categoría ingresada correctamente.");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al ingresar la categoría: " + ex.Message);
-            }
+                IdCategoria = txtIdCategoria.Text,
+                Nombre = txtNombreCategoria.Text,
+                Descripcion = txtDescripcion.Text,
+                Codigo = txtIdCategoria.Text
+            };
+
+            DatosCategoria datos= new DatosCategoria
+            datos.InsertarCategoria(categoria);
         }
+
+      
+
     }
 }
